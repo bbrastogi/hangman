@@ -1,0 +1,132 @@
+<style media="screen">
+
+#keyboard {
+    display:inline-block;
+    border:1px solid #009;
+    border-radius:5px;
+    background:linear-gradient(to right,#fce4ed,#ffe8cc);
+    background-image: linear-gradient(to right, rgb(252, 228, 237), rgb(255, 232, 204));
+    background-color:initial;
+    padding: 14px 28px;
+    text-align:center;
+    box-shadow:4px 4px 4px #999;
+ }
+
+ #keyboard div {
+    margin:5px 0;
+ }
+
+ #keyboard input {
+    box-shadow:2px 2px 2px #666;
+ }
+
+#keyboard input[type="text"] {
+    margin-top:20px;
+    border:1px solid #666;
+    border-radius:4px;
+    box-shadow:none;
+ }
+
+ #result {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+div.success{
+  border-radius: 15px;
+  background-color: #98FB98;
+  display:inline;
+  padding: 15px;
+  border: 1px solid black ;
+}
+
+div.failure{
+  border-radius: 15px;
+  background-color: #F08080;
+  display:inline;
+  padding: 15px;
+  border: 1px solid black ;
+}
+
+.alphabet_class {
+  display:inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+</style>
+
+<body>
+
+{% spaceless %}
+<div style="text-align:center;font-size:20px;">
+  <h1 style="color:green;font-size:40px;"> Welcome to Hangman Game </h1>
+  <p style="color:#000080;"> Category : {{ file_name }} </p>
+  <div class="image">
+    <img src="{{ game.image }}" height="250px" width="250px">
+  </div>
+
+  <h3> Guess the word </h3>
+
+  <pre> {{ game.display_word }} </pre>
+
+  <form class="play" action="" method="POST">
+  {% csrf_token %}
+  <div id="keyboard">
+
+    <div>
+       <input type="hidden" name="game_id" value="{{ game.id }}"/>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="Q" {% if alphabet_dict.Qdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="W" {% if alphabet_dict.Wdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="E" {% if alphabet_dict.Edisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="R" {% if alphabet_dict.Rdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="T" {% if alphabet_dict.Tdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="Y" {% if alphabet_dict.Ydisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="U" {% if alphabet_dict.Udisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="I" {% if alphabet_dict.Idisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="O" {% if alphabet_dict.Odisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="P" {% if alphabet_dict.Pdisable == 'true' %} disabled {% endif %}>
+     </div>
+     <div>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="A" {% if alphabet_dict.Adisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="S" {% if alphabet_dict.Sdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="D" {% if alphabet_dict.Ddisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="F" {% if alphabet_dict.Fdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="G" {% if alphabet_dict.Gdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="H" {% if alphabet_dict.Hdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="J" {% if alphabet_dict.Jdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="K" {% if alphabet_dict.Kdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="L" {% if alphabet_dict.Ldisable == 'true' %} disabled {% endif %}>
+     </div>
+     <div>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="Z" {% if alphabet_dict.Zdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="X" {% if alphabet_dict.Xdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="C" {% if alphabet_dict.Cdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="V" {% if alphabet_dict.Vdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="B" {% if alphabet_dict.Bdisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="N" {% if alphabet_dict.Ndisable == 'true' %} disabled {% endif %}>
+       <input type="submit" name="alphabet_key" class = "alphabet_class" value="M" {% if alphabet_dict.Mdisable == 'true' %} disabled {% endif %}>
+     </div>
+  </div> <br>
+  </form>
+
+  Guessed Keys : {% for keys in guessed %} {{ keys }} {% endfor %} <br> <br>
+  Wrong Guessed Keys : {% for keys in wrong %} {{ keys }} {% endfor %} <br> <br>
+
+  You have {{ no_of_tries }} chances left !! <br> <br>
+
+  {% if game.status == 'win' %}
+    <div class="success" id="result">
+        <strong>You win!</strong> The answer is <strong>"{{ game.random_word }}"</strong>.
+    </div>
+
+  {% elif game.status == 'lose' %}
+    <div class="failure" id="result">
+        <strong>You lose!</strong> The answer is <strong>"{{ game.random_word }}"</strong>.
+    </div>
+  {% endif %}
+</div>
+
+{% endspaceless %}
+</body>
